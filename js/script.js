@@ -22,7 +22,7 @@ const render = function () {
             '<button class="todo-remove"></button>' +
             '<button class="todo-complete"></button>' +
             '</div>';
-        if (item.text !== '') {
+        if (item.text.trim() !== '') {
             if (item.completed) {
                 todoCompleted.append(li);
             } else {
@@ -30,18 +30,20 @@ const render = function () {
             }
             li.querySelector('.todo-complete').addEventListener('click', function () {
                 item.completed = !item.completed;
-                render();
                 localStorage.toDoData = JSON.stringify(toDoData);
+                render();
             });
-            li.querySelector('.todo-remove').addEventListener('click', function () {
+            li.querySelector('.todo-remove').addEventListener('click', function deleteItem() {
                 li.remove();
                 toDoData.splice(index, 1);
                 localStorage.toDoData = JSON.stringify(toDoData);
+                render();
             });
         }
     });
 };
 render();
+
 
 todoControl.addEventListener('submit', function (event) {
     event.preventDefault();
